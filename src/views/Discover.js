@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -11,6 +11,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 import TitleBar from "../components/TitleBar";
 import DiscoverCard from "../components/DiscoverCard";
 import Footer from "../components/Footer";
+import axios from "axios";
 
 const theme = createTheme();
 export default function Discover() {
@@ -18,6 +19,8 @@ export default function Discover() {
   const [searchQuery, setSearchQuery] = useState("");
 
   const [page, setPage] = useState(1);
+  const [holidays, setHolidays] = useState([]);
+  const [heroes, setHeroes] = useState([]);
 
   const [options, setOptions] = useState([]);
 
@@ -25,6 +28,30 @@ export default function Discover() {
     setSearchQuery(query);
     setPage(1);
   };
+
+  const getHeroes = async () => {
+    let url = 'https://digital-dynamos.azurewebsites.net/api/heroes';
+    const result = await axios.get(url, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    setHeroes(result.data);
+  };
+
+  const getHolidays = async () => {
+    let url = 'https://date.nager.at/api/v2/publicholidays/2020/US';
+    const result = await axios.get(url, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    setHolidays(result.data);
+  };
+  useEffect(() => {
+    getHolidays();
+    getHeroes();
+  }, [])
 
   return (
     <ThemeProvider theme={theme}>
@@ -85,9 +112,9 @@ export default function Discover() {
         </Box>
 
         {/* {loading && ( */}
-          <Container maxWidth="lg" sx={{ mt: 5 }}>
-            <LinearProgress />
-          </Container>
+        <Container maxWidth="lg" sx={{ mt: 5 }}>
+          <LinearProgress />
+        </Container>
         {/* )} */}
 
         <Container maxWidth="lg">
@@ -96,6 +123,18 @@ export default function Discover() {
             <DiscoverCard result={{ id: 1, title: "title", rating: 3 }} key={1} />
           </Grid>
         </Container>
+
+        <Container maxWidth="lg">
+          {/* <pre>{JSON.parse(data)}</pre> */}
+          {heroes.map((result, index) => (
+            <p key={index}>{result.name} - {result.saying}</p>
+          ))}
+          *******************************************************
+          {holidays.map((result, index) => (
+            <p key={index}>{result.date} - {result.name}</p>
+          ))}
+        </Container>
+
       </main>
       <Footer />
     </ThemeProvider>
