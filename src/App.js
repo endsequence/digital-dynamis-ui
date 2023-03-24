@@ -7,6 +7,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import Discover from "./views/Discover";
+import Manage from "./views/Manage";
 
 export default function App() {
   return (
@@ -14,7 +15,7 @@ export default function App() {
       <Router>
         <Routes>
           <Route exact path="/" element={<Discover />} />
-          <Route exact path="/manage" element={<Discover />} />
+          <Route exact path="/manage" element={<Manage />} />
           {/* <Route exact path="/discover" element={<Discover />} /> */}
         </Routes>
       </Router>

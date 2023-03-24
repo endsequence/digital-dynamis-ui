@@ -19,7 +19,7 @@ export default function Discover() {
   const [searchQuery, setSearchQuery] = useState("");
 
   const [page, setPage] = useState(1);
-  const [holidays, setHolidays] = useState([]);
+  const [heroes, setHeroes] = useState([]);
 
   const [options, setOptions] = useState([]);
 
@@ -28,17 +28,18 @@ export default function Discover() {
     setPage(1);
   };
 
-  const getHolidays = async () => {
-    let url = 'https://date.nager.at/api/v2/publicholidays/2020/US';
+  const getHeroes = async () => {
+    let url = 'https://digital-dynamos.azurewebsites.net/api/heroes';
     const result = await axios.get(url, {
       headers: {
         "Content-Type": "application/json",
       },
     });
-    setHolidays(result.data);
+    setHeroes(result.data);
   };
+
   useEffect(() => {
-    getHolidays();
+    getHeroes();
   }, [])
 
   return (
@@ -46,8 +47,8 @@ export default function Discover() {
       <CssBaseline />
       <TitleBar
         text={`Discover || Have fun :)`}
-        link={"/manage"}
-        linkText={"Manage Content"}
+        link={"/"}
+        linkText={"Discover Content"}
       />
       <main>
         <Box
@@ -106,8 +107,8 @@ export default function Discover() {
         {/* )} */}
 
         <Container maxWidth="lg">
-          {holidays.map((result, index) => (
-            <p key={index}>{result.date} - {result.name}</p>
+          {heroes.map((result, index) => (
+            <p key={index}>{result.name} - {result.saying}</p>
           ))}
         </Container>
 
