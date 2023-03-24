@@ -13,8 +13,8 @@ export default function App() {
     <Box>
       <Router>
         <Routes>
-          <Route exact path="/" element={<Navigate replace to="/discover" />} />
-          <Route exact path="/discover" element={<Discover />} />
+          <Route exact path="/" element={<Discover />} />
+          {/* <Route exact path="/discover" element={<Discover />} /> */}
         </Routes>
       </Router>
     </Box>
