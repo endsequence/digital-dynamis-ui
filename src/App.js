@@ -14,6 +14,7 @@ export default function App() {
       <Router>
         <Routes>
           <Route exact path="/" element={<Discover />} />
+          <Route exact path="/manage" element={<Discover />} />
           {/* <Route exact path="/discover" element={<Discover />} /> */}
         </Routes>
       </Router>
