@@ -7,7 +7,6 @@ import { Grid } from "@mui/material";
 import Copyright from "../components/Copyright";
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
-import Footer from "../components/Footer";
 import TitleBar from "../components/TitleBar";
 
 const theme = createTheme();

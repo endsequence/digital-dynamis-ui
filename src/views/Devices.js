@@ -6,10 +6,10 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import TitleBar from "../components/TitleBar";
-import Footer from "../components/Footer";
 import axios from "../customAxios";
 import { API_HOST } from '../constants'
 import { Button, FormControl, FormHelperText, Input, InputLabel, Link, makeStyles, Modal, Paper, Typography } from "@mui/material";
+import Copyright from "../components/Copyright";
 
 const style = {
   position: 'absolute',
@@ -152,7 +152,7 @@ export default function Discover() {
           </Modal>
         </Box>
       </main>
-      <Footer />
+      <Copyright sx={{ mt: 8, mb: 4 }} />
     </ThemeProvider>
   );
 }
