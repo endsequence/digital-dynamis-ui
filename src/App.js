@@ -10,6 +10,7 @@ import Discover from "./views/Discover";
 import Manage from "./views/Manage";
 import Devices from "./views/Devices";
 import SignIn from "./views/SignIn";
+import Admin from "./views/Admin";
 import Tools from "./views/Tools";
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
@@ -24,6 +25,7 @@ export default function App() {
             <Route exact path="/devices" element={<Devices />} />
             <Route exact path="/tools" element={<Tools />} />
             <Route exact path="/login" element={<SignIn />} />
+            <Route exact path="/admin" element={<Admin />} />
           </Routes>
         </Router>
       </Box>
