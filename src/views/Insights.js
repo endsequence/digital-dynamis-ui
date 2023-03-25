@@ -16,7 +16,7 @@ import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 
 const theme = createTheme();
-export default function Discover() {
+export default function Insights() {
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -24,6 +24,13 @@ export default function Discover() {
   const [holidays, setHolidays] = useState([]);
 
   const [options, setOptions] = useState([]);
+
+  const [data, setData] = useState([
+    [1678895946000, 10],
+    [1679498354000, 29.9],
+    [1679584754000, 71.5],
+    [1679671154000, 106.4]
+  ])
 
   const handleSearchQuery = (query) => {
     setSearchQuery(query);
@@ -56,8 +63,53 @@ export default function Discover() {
           }}
         >
           <Container maxWidth="lg">
-
-          <HighchartsReact
+            <Grid container spacing={4} sx={{ my: 2 }}>
+              <Grid item xs={12} sm={6} md={6} lg={6}>
+                <HighchartsReact
+                  highcharts={Highcharts}
+                  options={{
+                    title: {
+                      text: 'My Devices Usage (Idle Hours)',
+                    },
+                    subtitle: {
+                      text: 'A chart depicting hours wasted by devices in idle state',
+                      align: 'center'
+                  },
+                    xAxis: {
+                      type: 'datetime'
+                    },
+                    yAxis: {
+                      title: {
+                          text: 'No of Idle Hours'
+                      }
+                  },
+                    // plotOptions: {
+                    //   series: {
+                    //     label: {
+                    //       connectorAllowed: false
+                    //     },
+                    //     pointStart: 1
+                    //   }
+                    // },
+                    series: [
+                      {
+                        name: 'Date',
+                        data: data
+                      },
+                      // {
+                      //   name: 'Idle Hours',
+                      //   data: [
+                      //     [1679498354000, 29.9],
+                      //     [1679584754000, 71.5],
+                      //     [1679671154000, 106.4]
+                      //   ]
+                      // }
+                    ]
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6} md={6} lg={6}>
+                <HighchartsReact
                   highcharts={Highcharts}
                   options={{
                     title: {
@@ -68,67 +120,10 @@ export default function Discover() {
                     }]
                   }}
                 />
-
-            <Grid container spacing={4} sx={{ my: 2 }}>
-              <Grid item xs={12} sm={6} md={6} lg={6}>
-                <Autocomplete
-                  sx={{ width: "100%" }}
-                  id="free-solo-demo"
-                  freeSolo
-                  options={options}
-                  inputValue={searchQuery}
-                  onInputChange={(event, newInputValue) => {
-                    handleSearchQuery(newInputValue);
-                  }}
-                  renderInput={(params) => {
-                    const InputProps = { ...params.InputProps };
-                    InputProps.endAdornment = null;
-                    return (
-                      <TextField
-                        {...params}
-                        InputProps={InputProps}
-                        label="Search"
-                        value={searchQuery || ""}
-                        onChange={(e) => handleSearchQuery(e.target.value)}
-                      />
-                    );
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6} md={6} lg={6}>
-                <Pagination
-                  count={1000}
-                  page={page}
-                  shape="rounded"
-                  size="large"
-                  onChange={(event, Number) => {
-                    setPage(Number);
-                  }}
-                />
               </Grid>
             </Grid>
           </Container>
         </Box>
-
-        {/* {loading && ( */}
-        <Container maxWidth="lg" sx={{ mt: 5 }}>
-          <LinearProgress />
-        </Container>
-        {/* )} */}
-
-        <Container maxWidth="lg">
-          {holidays.map((result, index) => (
-            <p key={index}>{result.date} - {result.name}</p>
-          ))}
-        </Container>
-
-        <Container maxWidth="lg">
-          <Grid container spacing={4}>
-            <DiscoverCard result={{ id: 1, title: "title", rating: 3 }} key={0} />
-            <DiscoverCard result={{ id: 1, title: "title", rating: 3 }} key={1} />
-          </Grid>
-        </Container>
-
       </main>
       <Copyright sx={{ mt: 8, mb: 4 }} />
     </ThemeProvider>

@@ -6,7 +6,7 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
-import Discover from "./views/Discover";
+import Insights from "./views/Insights";
 import Manage from "./views/Manage";
 import Devices from "./views/Devices";
 import SignIn from "./views/SignIn";
@@ -20,7 +20,7 @@ export default function App() {
       <Box>
         <Router>
           <Routes>
-            <Route exact path="/" element={<Discover />} />
+            <Route exact path="/" element={<Insights />} />
             <Route exact path="/devices" element={<Devices />} />
             <Route exact path="/tools" element={<Tools />} />
             <Route exact path="/login" element={<SignIn />} />
