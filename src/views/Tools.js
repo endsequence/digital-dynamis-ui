@@ -10,7 +10,7 @@ import Pagination from "@mui/material/Pagination";
 import LinearProgress from "@mui/material/LinearProgress";
 import TitleBar from "../components/TitleBar";
 import DiscoverCard from "../components/DiscoverCard";
-import Footer from "../components/Footer";
+import Copyright from "../components/Copyright";
 import axios from "axios";
 import { Alert, Button, Paper, Snackbar, Typography } from "@mui/material";
 // import FileUpload from "react-mui-fileuploader"
@@ -203,7 +203,7 @@ export default function Tools() {
             </main>
 
 
-
+            <Copyright sx={{ mt: 8, mb: 4 }} />
         </ThemeProvider>
     )
 }

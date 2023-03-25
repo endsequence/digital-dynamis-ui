@@ -10,7 +10,7 @@ import Pagination from "@mui/material/Pagination";
 import LinearProgress from "@mui/material/LinearProgress";
 import TitleBar from "../components/TitleBar";
 import DiscoverCard from "../components/DiscoverCard";
-import Footer from "../components/Footer";
+import Copyright from "../components/Copyright";
 import axios from "axios";
 
 const theme = createTheme();
@@ -115,7 +115,7 @@ export default function Discover() {
         </Container>
 
       </main>
-      <Footer />
+      <Copyright sx={{ mt: 8, mb: 4 }} />
     </ThemeProvider>
   );
 }
