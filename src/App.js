@@ -9,18 +9,23 @@ import {
 import Discover from "./views/Discover";
 import Manage from "./views/Manage";
 import SignIn from "./views/SignIn";
+import Tools from "./views/Tools";
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 
 export default function App() {
   return (
-    <Box>
-      <Router>
-        <Routes>
-          <Route exact path="/" element={<Discover />} />
-          <Route exact path="/devices" element={<Manage />} />
-          <Route exact path="/tools" element={<Manage />} />
-          <Route exact path="/login" element={<SignIn />} />
-        </Routes>
-      </Router>
-    </Box>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <Box>
+        <Router>
+          <Routes>
+            <Route exact path="/" element={<Discover />} />
+            <Route exact path="/devices" element={<Manage />} />
+            <Route exact path="/tools" element={<Tools />} />
+            <Route exact path="/login" element={<SignIn />} />
+          </Routes>
+        </Router>
+      </Box>
+    </LocalizationProvider>
   );
 }
