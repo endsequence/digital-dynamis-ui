@@ -10,7 +10,7 @@ const TitleBar = () => {
 
   const navItems = location.pathname.includes('admin') ? [
     { label: 'Change Reuqest', value: '/request' },
-    { label: 'Inventory', value: '/invetory' }
+    { label: 'Inventory', value: '/inventory' }
   ] : [
     { label: 'Insights', value: '/' },
     { label: 'Devices', value: '/devices' },
