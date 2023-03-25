@@ -3,11 +3,13 @@ import Grid from "@mui/material/Grid";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AppBar, Button, IconButton, Toolbar, Typography, Box } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
-import { setStorage } from "../utils";
+import { getStorage, setStorage } from "../utils";
 
 const TitleBar = () => {
   let navigate = useNavigate();
   const location = useLocation()
+
+  const username = getStorage("DD_username");
 
   const navItems = location.pathname.includes('admin') ? [
     { label: 'Change Reuqest', value: '/admin/request' },
@@ -55,7 +57,7 @@ const TitleBar = () => {
           component="div"
           sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
         >
-          Welcome user name
+          Welcome {username}
         </Typography>
         <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
           {navItems.map((item, index) => (

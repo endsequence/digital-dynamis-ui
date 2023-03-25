@@ -15,6 +15,7 @@ import axios from "axios";
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import { Typography } from "@mui/material";
+import { API_HOST } from "../constants";
 
 const theme = createTheme();
 export default function Insights() {
@@ -25,30 +26,17 @@ export default function Insights() {
   const [holidays, setHolidays] = useState([]);
 
   const [options, setOptions] = useState([]);
+  const [idleHrsdata, setIdleHrsdata] = useState([]);
 
-  const [data, setData] = useState([
-    [1678895946000, 10],
-    [1679498354000, 29.9],
-    [1679584754000, 71.5],
-    [1679671154000, 106.4]
-  ])
+  const getIdleHours = async () => {
+    let url = `${API_HOST}/idleTime/300`;
+    const result = await axios.get(url);
+    const idleHours = result?.data?.idleHours || [];
+    setIdleHrsdata(idleHours);
+  }
 
-  const handleSearchQuery = (query) => {
-    setSearchQuery(query);
-    setPage(1);
-  };
-
-  const getHolidays = async () => {
-    let url = 'https://date.nager.at/api/v2/publicholidays/2020/US';
-    const result = await axios.get(url, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    setHolidays(result.data);
-  };
   useEffect(() => {
-    getHolidays();
+    getIdleHours();
   }, [])
 
   return (
@@ -115,7 +103,7 @@ export default function Insights() {
                     series: [
                       {
                         name: 'Date',
-                        data: data
+                        data: idleHrsdata
                       },
                       // {
                       //   name: 'Idle Hours',
