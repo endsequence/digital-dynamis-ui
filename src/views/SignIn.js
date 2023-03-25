@@ -16,11 +16,14 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { API_HOST } from '../constants'
 import { LinearProgress } from "@mui/material";
 import Copyright from "../components/Copyright";
+import { setStorage } from "../utils";
+import { useNavigate } from "react-router-dom";
 
 
 const theme = createTheme();
 
 export default function SignIn() {
+    let navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const handleSubmit = async (event) => {
         setLoading(true);
@@ -33,12 +36,17 @@ export default function SignIn() {
         let url = `${API_HOST}/login`;
         try {
             const result = await axios.post(url, {
-                userName: data.get('email'), password: data.get('password')
+                username: data.get('email'), password: data.get('password')
             });
+            const user = result.data.user;
+            console.log({result});
+            setStorage("DD_isLoggedIn", true);
+            setStorage("DD_username", user.name)
+            setStorage("DD_isAdmin", user.isAdmin)
+            navigate("/");
         } catch (e) {
-      
+            setStorage("DD_isLoggedIn", false);
         }
-
         setLoading(false);
     };
 

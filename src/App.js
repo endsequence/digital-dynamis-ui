@@ -15,19 +15,30 @@ import RequestList from "./views/RequestList";
 import Tools from "./views/Tools";
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { getStorage } from "./utils";
 
 export default function App() {
+
+  const RequireAuth = ({ children }) => {
+    const userIsLogged = getStorage("DD_isLoggedIn");
+    if (!userIsLogged) {
+      return <SignIn />;
+    }
+    return children;
+  };
+
+
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <Box>
         <Router>
           <Routes>
-            <Route exact path="/" element={<Insights />} />
-            <Route exact path="/devices" element={<Devices />} />
-            <Route exact path="/tools" element={<Tools />} />
-            <Route exact path="/login" element={<SignIn />} />
-            <Route exact path="/admin" element={<Admin />} />
-            <Route exact path="/request" element={<RequestList />} />
+            <Route exact path="/" element={<RequireAuth><Insights /></RequireAuth>} />
+            <Route exact path="/devices" element={<RequireAuth><Devices /></RequireAuth>} />
+            <Route exact path="/tools" element={<RequireAuth><Tools /></RequireAuth>} />
+            <Route exact path="/login" element={<RequireAuth><SignIn /></RequireAuth>} />
+            <Route exact path="/admin" element={<RequireAuth><Admin /></RequireAuth>} />
+            <Route exact path="/admin/request" element={<RequireAuth><RequestList /></RequireAuth>} />
           </Routes>
         </Router>
       </Box>
