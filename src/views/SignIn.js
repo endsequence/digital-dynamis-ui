@@ -14,6 +14,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { API_HOST } from '../constants'
+import { LinearProgress } from "@mui/material";
 
 function Copyright(props) {
     return (
@@ -31,8 +32,9 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
-    const [loginData, setLoginData] = useState();
+    const [loading, setLoading] = useState(false);
     const handleSubmit = async (event) => {
+        setLoading(true);
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         console.log({
@@ -40,11 +42,15 @@ export default function SignIn() {
             password: data.get('password'),
         });
         let url = `${API_HOST}/login`;
-        const result = await axios.post(url, {
-            userName: data.get('email'), password: data.get('password')
-        });
+        try {
+            const result = await axios.post(url, {
+                userName: data.get('email'), password: data.get('password')
+            });
+        } catch (e) {
+      
+        }
 
-
+        setLoading(false);
     };
 
     return (
@@ -74,6 +80,7 @@ export default function SignIn() {
                             label="Email Address"
                             name="email"
                             autoComplete="email"
+                            disabled={loading}
                             autoFocus
                         />
                         <TextField
@@ -84,8 +91,10 @@ export default function SignIn() {
                             label="Password"
                             type="password"
                             id="password"
+                            disabled={loading}
                             autoComplete="current-password"
                         />
+                        {loading ? <LinearProgress /> : ''}
                         <Button
                             type="submit"
                             fullWidth
