@@ -19,6 +19,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { getStorage } from "../utils";
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 
@@ -101,6 +103,7 @@ Row.propTypes = {
 };
 
 export default function ListRequests() {
+    let navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [selectedOption, setOption] = useState('');
     const handleSubmit = async (rowId) => {
@@ -157,6 +160,13 @@ export default function ListRequests() {
         createData(4, 'Cupcake', 305, 3.7, 67, 4.3, 2.5),
         createData(5, 'Gingerbread', 356, 16.0, 49, 3.9, 1.5),
     ];
+
+    useEffect(() => {
+        const userIsAdmin = getStorage("DD_isAdmin");
+        if (userIsAdmin !== 'true') {
+            navigate('/')
+        }
+    }, [navigate])
 
     return (
         <ThemeProvider theme={theme}>

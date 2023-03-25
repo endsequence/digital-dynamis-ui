@@ -8,10 +8,13 @@ import Copyright from "../components/Copyright";
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import TitleBar from "../components/TitleBar";
+import { getStorage } from "../utils";
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 
 export default function SignIn() {
+    let navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const handleSubmit = async (event) => {
         setLoading(true);
@@ -32,6 +35,13 @@ export default function SignIn() {
 
         setLoading(false);
     };
+
+    useEffect(() => {
+        const userIsAdmin = getStorage("DD_isAdmin");
+        if (userIsAdmin !== 'true') {
+            navigate('/')
+        }
+    }, [navigate])
 
     return (
         <ThemeProvider theme={theme}>
@@ -93,7 +103,7 @@ export default function SignIn() {
                                         name: 'Tokyo',
                                         data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4,
                                             194.1, 95.6, 54.4]
-                                
+
                                     }]
                                 }}
                             />

@@ -17,19 +17,18 @@ import HighchartsReact from 'highcharts-react-official'
 import { Typography } from "@mui/material";
 import { API_HOST } from "../constants";
 import { getStorage } from "../utils";
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 export default function Insights() {
+  let navigate = useNavigate();
 
   const userId = getStorage("DD_id");
+  const userName = getStorage("DD_username");
 
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const [page, setPage] = useState(1);
-  const [holidays, setHolidays] = useState([]);
-
-  const [options, setOptions] = useState([]);
   const [idleHrsdata, setIdleHrsdata] = useState([]);
+  const [cfValues, setCfValues] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   const getIdleHours = async () => {
     let url = `${API_HOST}/idleTime/${userId}`;
@@ -38,9 +37,34 @@ export default function Insights() {
     setIdleHrsdata(idleHours);
   }
 
+  const getCfData = async () => {
+    let url = `${API_HOST}/insights`;
+    const result = await axios.get(url);
+    const cfData = result?.data?.cfData || [];
+    let categories = [], cfValues = [];
+    for (const i of cfData) {
+      categories.push(i[0]);
+      cfValues.push(i[1]);
+    }
+    const userIndex = categories.indexOf(userName);
+    if (userIndex) {
+      categories.unshift(categories.splice(userIndex, 1)[0]);
+    }
+    setCategories(categories);
+    setCfValues(cfValues);
+  }
+
   useEffect(() => {
     getIdleHours();
+    getCfData();
   }, [])
+
+  useEffect(() => {
+    const userIsAdmin = getStorage("DD_isAdmin");
+    if (userIsAdmin === 'true') {
+      navigate('/admin')
+    }
+  }, [navigate])
 
   return (
     <ThemeProvider theme={theme}>
@@ -108,14 +132,6 @@ export default function Insights() {
                         name: 'Date',
                         data: idleHrsdata
                       },
-                      // {
-                      //   name: 'Idle Hours',
-                      //   data: [
-                      //     [1679498354000, 29.9],
-                      //     [1679584754000, 71.5],
-                      //     [1679671154000, 106.4]
-                      //   ]
-                      // }
                     ]
                   }}
                 />
@@ -124,11 +140,23 @@ export default function Insights() {
                 <HighchartsReact
                   highcharts={Highcharts}
                   options={{
+                    chart: {
+                      type: 'column'
+                    },
                     title: {
                       text: 'My chart'
                     },
+                    xAxis: {
+                      categories: categories
+                    },
+                    yAxis: {
+                      title: {
+                        text: 'Carbon Footprint Values'
+                      }
+                    },
                     series: [{
-                      data: [1, 2, 3]
+                      name: "User",
+                      data: cfValues
                     }]
                   }}
                 />

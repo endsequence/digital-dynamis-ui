@@ -10,10 +10,13 @@ import axios from "../customAxios";
 import { API_HOST } from '../constants'
 import { Button, Link, Modal, Paper, Typography } from "@mui/material";
 import Copyright from "../components/Copyright";
+import { useNavigate } from "react-router-dom";
+import { getStorage } from "../utils";
 
 const linkCss = { border: 1, borderRadius: 48, pb: 1, pt: 1, pr: 2, pl: 2, fontSize: 10, mt: 2 };
 const theme = createTheme();
 export default function Discover() {
+  let navigate = useNavigate();
 
   const [devices, setDevices] = useState([]);
   const [reason, setReason] = useState('');
@@ -49,7 +52,14 @@ export default function Discover() {
     getDeviceList();
   }, [])
 
-  console.log({ devices })
+  // console.log({ devices })
+
+  useEffect(() => {
+    const userIsAdmin = getStorage("DD_isAdmin");
+    if (userIsAdmin === 'true') {
+      navigate('/admin')
+    }
+  }, [navigate])
 
   return (
     <ThemeProvider theme={theme}>

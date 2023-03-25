@@ -18,6 +18,7 @@ import UploadFileIcon from "@mui/icons-material/UploadFile";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { useNavigate } from "react-router-dom";
+import { getStorage } from "../utils";
 
 const theme = createTheme();
 export default function Tools() {
@@ -58,6 +59,13 @@ export default function Tools() {
         updateToast("success", "Congrats! Your request is submitted and you have won rewards :)");
         // navigate("/tools");
     }
+
+    useEffect(() => {
+        const userIsAdmin = getStorage("DD_isAdmin");
+        if (userIsAdmin === 'true') {
+          navigate('/admin')
+        }
+      }, [navigate])
 
     return (
         <ThemeProvider theme={theme}>
