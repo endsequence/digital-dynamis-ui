@@ -16,9 +16,12 @@ import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import { Typography } from "@mui/material";
 import { API_HOST } from "../constants";
+import { getStorage } from "../utils";
 
 const theme = createTheme();
 export default function Insights() {
+
+  const userId = getStorage("DD_id");
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -29,7 +32,7 @@ export default function Insights() {
   const [idleHrsdata, setIdleHrsdata] = useState([]);
 
   const getIdleHours = async () => {
-    let url = `${API_HOST}/idleTime/300`;
+    let url = `${API_HOST}/idleTime/${userId}`;
     const result = await axios.get(url);
     const idleHours = result?.data?.idleHours || [];
     setIdleHrsdata(idleHours);

@@ -8,21 +8,9 @@ import TextField from "@mui/material/TextField";
 import TitleBar from "../components/TitleBar";
 import axios from "../customAxios";
 import { API_HOST } from '../constants'
-import { Button, FormControl, FormHelperText, Input, InputLabel, Link, makeStyles, Modal, Paper, Typography } from "@mui/material";
+import { Button, Link, Modal, Paper, Typography } from "@mui/material";
 import Copyright from "../components/Copyright";
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 600,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 3,
-  textAlign: "center"
-};
 const linkCss = { border: 1, borderRadius: 48, pb: 1, pt: 1, pr: 2, pl: 2, fontSize: 10, mt: 2 };
 const theme = createTheme();
 export default function Discover() {
@@ -76,8 +64,7 @@ export default function Discover() {
           }}
         >
           <Container maxWidth="lg" sx={{ pt: 8 }}>
-            <Grid direction="column"
-              alignItems="center"
+            <Grid alignItems="center"
               textAlign="center"
               justifyContent="center">
               <Box sx={{ fontSize: '35px', fontWeight: 'bold', pb: 6 }}>
@@ -86,9 +73,9 @@ export default function Discover() {
             </Grid>
 
             <Grid container spacing={2} >
-              {devices.map(device => {
+              {devices.map((device, index) => {
                 return (
-                  <Grid item xs={6} md={4} direction="column"
+                  <Grid item xs={6} md={4} key={index}
                     alignItems="center"
                     textAlign="center"
                     justifyContent="center">
