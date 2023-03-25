@@ -15,9 +15,8 @@ const requestHandler = request => {
 
 const responseHandler = response => {
     if (response.status === 401) {
+        setStorage("DD_isLoggedIn", false);
         window.location = '/login';
-        setStorage('token','');
-        setStorage('lIn',0);
     }
 
     return response;

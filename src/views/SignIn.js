@@ -39,10 +39,11 @@ export default function SignIn() {
                 username: data.get('email'), password: data.get('password')
             });
             const user = result.data.user;
-            console.log({result});
+            // console.log({result});
             setStorage("DD_isLoggedIn", true);
             setStorage("DD_username", user.name)
             setStorage("DD_isAdmin", user.isAdmin)
+            setStorage("DD_id", user.id)
             navigate("/");
         } catch (e) {
             setStorage("DD_isLoggedIn", false);
