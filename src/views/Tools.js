@@ -88,14 +88,26 @@ export default function Tools() {
                     <Container maxWidth="lg">
 
                         <Grid container spacing={4} sx={{ my: 2 }}>
-                            <Grid item xs={12} sm={6} md={6} lg={6}>
+                            <Grid item xs={12} sm={12} md={12} lg={12}>
                                 <Typography
-                                    variant="h6"
+                                    color="primary"
+                                    variant="h5"
                                     component="div"
-                                    sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+                                    sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block', textAlign: 'center' } }}
                                 >
-                                    Print Scheduler
+                                    Office Tools
                                 </Typography>
+                                <Typography
+                                    component="div"
+                                    sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block', textAlign: 'center' } }}
+                                >
+                                    We want to ensure a cleaner, greener world for future generations, by recycling e-waste and prolong device life by analyzing device health that will help us reduce carbon footprint
+                                </Typography>
+                            </Grid>
+                        </Grid>
+
+                        <Grid container spacing={4} sx={{ my: 2 }}>
+                            <Grid item xs={12} sm={4} md={4} lg={4}>
                                 <Box
                                     sx={{
                                         display: 'flex',
@@ -108,19 +120,20 @@ export default function Tools() {
                                     }}
                                 >
                                     <Paper elevation={3}>
-                                        <Grid container spacing={4} sx={{ my: 5 }}>
-                                            <Grid item xs={12} sm={6} md={6} lg={6} textAlign="center">
-                                                <Button
-                                                    component="label"
-                                                    variant="outlined"
-                                                    startIcon={<UploadFileIcon />}
-                                                    sx={{ marginRight: "1rem" }}
+                                        <Grid container spacing={4} sx={{ mt: 1 }}>
+                                            <Grid item xs={12} sm={12} md={12} lg={12} textAlign="center">
+                                                <Typography
+                                                    component="div"
+                                                    sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+                                                    color="primary"
                                                 >
-                                                    Upload ZIP
-                                                    <input type="file" accept=".zip" hidden onChange={handleFileUpload} />
-                                                </Button>
+                                                    Print Scheduler
+                                                </Typography>
                                             </Grid>
-                                            <Grid item xs={12} sm={6} md={6} lg={6} textAlign="center">
+                                        </Grid>
+
+                                        <Grid container spacing={4} sx={{ my: 1 }}>
+                                            <Grid item xs={12} sm={12} md={12} lg={12} textAlign="center">
                                                 <Box>
                                                     <DateTimePicker
                                                         label="Choose Date/Time"
@@ -132,6 +145,18 @@ export default function Tools() {
                                                     />
                                                 </Box>
                                             </Grid>
+                                            <Grid item xs={12} sm={12} md={12} lg={12} textAlign="center">
+                                                <Button
+                                                    component="label"
+                                                    variant="outlined"
+                                                    startIcon={<UploadFileIcon />}
+                                                    sx={{ marginRight: "1rem" }}
+                                                >
+                                                    Upload ZIP
+                                                    <input type="file" accept=".zip" hidden onChange={handleFileUpload} />
+                                                </Button>
+                                            </Grid>
+
                                         </Grid>
 
                                         <Grid container spacing={4} sx={{ my: 2 }}>
@@ -141,7 +166,7 @@ export default function Tools() {
                                                     component="div"
                                                     sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
                                                 >
-                                                    File submitted: {fileName}
+                                                    File uploaded
                                                 </Typography>}
                                             </Grid>
                                         </Grid>
@@ -163,14 +188,7 @@ export default function Tools() {
                                 </Box>
                             </Grid>
 
-                            <Grid item xs={12} sm={6} md={6} lg={6}>
-                                <Typography
-                                    variant="h6"
-                                    component="div"
-                                    sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-                                >
-                                    Coming soon...
-                                </Typography>
+                            <Grid item xs={12} sm={4} md={4} lg={4}>
                                 <Box
                                     sx={{
                                         display: 'flex',
@@ -183,10 +201,73 @@ export default function Tools() {
                                     }}
                                 >
                                     <Paper elevation={3}>
-                                        <Grid container spacing={4} sx={{ my: 2 }}>
+
+
+                                        <Grid
+                                            container
+                                            direction="column"
+                                            justifyContent="space-between"
+                                            alignItems="center"
+                                            sx={{ mt: 1 }}
+                                            spacing={4}
+                                        >
+                                            <Grid item xs={6} sm={6} md={6} lg={6} textAlign="center">
+                                                <Typography
+                                                    component="div"
+                                                    sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+                                                    color="primary"
+                                                >
+                                                    Order Recycled Paper
+                                                </Typography>
+                                                <Typography
+                                                    component="div"
+                                                    sx={{ flexGrow: 10, mt: 2, display: { xs: 'none', sm: 'block' } }}
+                                                >
+                                                When paper gets recycled it preserves natural resources, saving energy, reducing greenhouse gas emissions and keeps landfill space free from other types of waste that can't be recycled.
+                                                </Typography>
+                                            </Grid>
+                                            <Grid item xs={6} sm={6} md={6} lg={6} textAlign="center">
+                                                <Button
+                                                    component="label"
+                                                    variant="contained"
+                                                    sx={{ marginRight: "1rem" }}
+                                                >
+                                                    SUBMIT
+                                                    <input type="submit" accept=".zip" hidden onClick={handleSubmit} />
+                                                </Button>
+                                            </Grid>
+                                        </Grid>
+                                    </Paper>
+                                </Box>
+                            </Grid>
+
+                            <Grid item xs={12} sm={4} md={4} lg={4}>
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        flexWrap: 'wrap',
+                                        '& > :not(style)': {
+                                            m: 1,
+                                            width: "100%",
+                                            height: 400,
+                                        },
+                                    }}
+                                >
+                                    <Paper elevation={3}>
+                                        <Grid container spacing={4} sx={{ mt: 1 }}>
                                             <Grid item xs={12} sm={12} md={12} lg={12} textAlign="center">
                                                 <Typography
-                                                    // variant="h6"
+                                                    component="div"
+                                                    sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+                                                    color="primary"
+                                                >
+                                                    Coming soon...
+                                                </Typography>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid container spacing={4} sx={{ my: 2 }}>
+                                            <Grid item xs={12} sm={12} md={12} lg={12} textAlign="center" sx={{ px: 2 }}>
+                                                <Typography
                                                     component="div"
                                                     sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
                                                 >
