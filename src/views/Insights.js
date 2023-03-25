@@ -65,24 +65,24 @@ export default function Insights() {
         >
           <Container maxWidth="lg">
 
-          <Grid container spacing={4} sx={{ my: 2 }}>
-                            <Grid item xs={12} sm={12} md={12} lg={12}>
-                                <Typography
-                                    color="primary"
-                                    variant="h5"
-                                    component="div"
-                                    sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block', textAlign: 'center' } }}
-                                >
-                                    Impact Insights
-                                </Typography>
-                                <Typography
-                                    component="div"
-                                    sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block', textAlign: 'center' } }}
-                                >
-                                    Identifying and quantifying CO2 emissions helps to identify excessive energy usage or other inefficiencies. Lowering emissions typically goes hand in hand with increasing efficiency and cost-effectiveness in a company's processes.
-                                </Typography>
-                            </Grid>
-                        </Grid>
+            <Grid container spacing={4} sx={{ my: 2 }}>
+              <Grid item xs={12} sm={12} md={12} lg={12}>
+                <Typography
+                  color="primary"
+                  variant="h5"
+                  component="div"
+                  sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block', textAlign: 'center' } }}
+                >
+                  Impact Insights
+                </Typography>
+                <Typography
+                  component="div"
+                  sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block', textAlign: 'center' } }}
+                >
+                  Identifying and quantifying CO2 emissions helps to identify excessive energy usage or other inefficiencies. Lowering emissions typically goes hand in hand with increasing efficiency and cost-effectiveness in a company's processes.
+                </Typography>
+              </Grid>
+            </Grid>
 
             <Grid container spacing={4} sx={{ my: 2 }}>
               <Grid item xs={12} sm={6} md={6} lg={6}>
@@ -95,15 +95,15 @@ export default function Insights() {
                     subtitle: {
                       text: 'A chart depicting hours wasted by devices in idle state',
                       align: 'center'
-                  },
+                    },
                     xAxis: {
                       type: 'datetime'
                     },
                     yAxis: {
                       title: {
-                          text: 'No of Idle Hours'
+                        text: 'No of Idle Hours'
                       }
-                  },
+                    },
                     // plotOptions: {
                     //   series: {
                     //     label: {
