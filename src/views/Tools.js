@@ -15,23 +15,29 @@ import axios from "axios";
 import { Alert, Button, Paper, Snackbar, Typography } from "@mui/material";
 // import FileUpload from "react-mui-fileuploader"
 import UploadFileIcon from "@mui/icons-material/UploadFile";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 export default function Tools() {
+    let navigate = useNavigate();
     const [filesToUpload, setFilesToUpload] = useState([])
     const [fileName, setFilename] = useState();
     const [toastOpen, setToastOpen] = useState(false);
     const [toastMessage, setToastMessage] = useState();
     const [toastSeverity, setToastSeverity] = useState();
+    const [date, setDate] = useState(new Date());
 
     const handleClose = (event, reason) => {
         if (reason === "clickaway") {
-          return;
+            return;
         }
         setToastOpen(false);
-      };
+    };
 
     const handleFileUpload = (e) => {
+        console.log("in handleFileUpload");
         if (!e.target.files) {
             return;
         }
@@ -44,12 +50,13 @@ export default function Tools() {
         setToastSeverity(severity);
         setToastMessage(message);
         setToastOpen(true);
-      };
+    };
 
     const handleSubmit = () => {
         console.log("in handleSubmit")
         setFilename();
         updateToast("success", "Congrats! Your request is submitted and you have won rewards :)");
+        // navigate("/tools");
     }
 
     return (
@@ -114,14 +121,16 @@ export default function Tools() {
                                                 </Button>
                                             </Grid>
                                             <Grid item xs={12} sm={6} md={6} lg={6} textAlign="center">
-                                                <Button
-                                                    component="label"
-                                                    variant="contained"
-                                                    sx={{ marginRight: "1rem" }}
-                                                >
-                                                    SUBMIT
-                                                    <input type="submit" accept=".zip" hidden onClick={handleSubmit} />
-                                                </Button>
+                                                <Box>
+                                                    <DateTimePicker
+                                                        label="Choose Date/Time"
+                                                        // inputFormat="MM/dd/yyyy"
+                                                        value={date}
+                                                        //   onChange={handleChange}
+                                                        onChange={(value) => setDate(value)}
+                                                        renderInput={(params) => <TextField {...params} />}
+                                                    />
+                                                </Box>
                                             </Grid>
                                         </Grid>
 
@@ -136,6 +145,20 @@ export default function Tools() {
                                                 </Typography>}
                                             </Grid>
                                         </Grid>
+
+                                        <Grid container spacing={4} sx={{ my: 2 }}>
+                                            <Grid item xs={12} sm={12} md={12} lg={12} textAlign="right">
+                                                <Button
+                                                    component="label"
+                                                    variant="contained"
+                                                    sx={{ marginRight: "1rem" }}
+                                                >
+                                                    SUBMIT
+                                                    <input type="submit" accept=".zip" hidden onClick={handleSubmit} />
+                                                </Button>
+                                            </Grid>
+                                        </Grid>
+
                                     </Paper>
                                 </Box>
                             </Grid>
@@ -159,8 +182,8 @@ export default function Tools() {
                                         },
                                     }}
                                 >
-                                    <Paper elevation={3}> 
-                                    <Grid container spacing={4} sx={{ my: 2 }}>
+                                    <Paper elevation={3}>
+                                        <Grid container spacing={4} sx={{ my: 2 }}>
                                             <Grid item xs={12} sm={12} md={12} lg={12} textAlign="center">
                                                 <Typography
                                                     // variant="h6"
