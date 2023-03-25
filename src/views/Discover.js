@@ -12,6 +12,8 @@ import TitleBar from "../components/TitleBar";
 import DiscoverCard from "../components/DiscoverCard";
 import Copyright from "../components/Copyright";
 import axios from "axios";
+import Highcharts from 'highcharts'
+import HighchartsReact from 'highcharts-react-official'
 
 const theme = createTheme();
 export default function Discover() {
@@ -54,6 +56,19 @@ export default function Discover() {
           }}
         >
           <Container maxWidth="lg">
+
+          <HighchartsReact
+                  highcharts={Highcharts}
+                  options={{
+                    title: {
+                      text: 'My chart'
+                    },
+                    series: [{
+                      data: [1, 2, 3]
+                    }]
+                  }}
+                />
+
             <Grid container spacing={4} sx={{ my: 2 }}>
               <Grid item xs={12} sm={6} md={6} lg={6}>
                 <Autocomplete
