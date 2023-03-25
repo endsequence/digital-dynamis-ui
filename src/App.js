@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import Discover from "./views/Discover";
 import Manage from "./views/Manage";
+import Tools from "./views/Tools";
 
 export default function App() {
   return (
@@ -16,7 +17,7 @@ export default function App() {
         <Routes>
           <Route exact path="/" element={<Discover />} />
           <Route exact path="/devices" element={<Manage />} />
-          <Route exact path="/tools" element={<Manage />} />
+          <Route exact path="/tools" element={<Tools />} />
         </Routes>
       </Router>
     </Box>

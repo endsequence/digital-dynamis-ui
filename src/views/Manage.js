@@ -14,7 +14,7 @@ import Footer from "../components/Footer";
 import axios from "axios";
 
 const theme = createTheme();
-export default function Discover() {
+export default function Manage() {
 
   const [searchQuery, setSearchQuery] = useState("");
 
