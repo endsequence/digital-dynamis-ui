@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import Discover from "./views/Discover";
 import Manage from "./views/Manage";
+import SignIn from "./views/SignIn";
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
           <Route exact path="/" element={<Discover />} />
           <Route exact path="/devices" element={<Manage />} />
           <Route exact path="/tools" element={<Manage />} />
+          <Route exact path="/login" element={<SignIn />} />
         </Routes>
       </Router>
     </Box>
