@@ -11,6 +11,7 @@ import Manage from "./views/Manage";
 import Devices from "./views/Devices";
 import SignIn from "./views/SignIn";
 import Admin from "./views/Admin";
+import RequestList from "./views/RequestList";
 import Tools from "./views/Tools";
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
@@ -37,6 +38,7 @@ export default function App() {
             <Route exact path="/tools" element={<RequireAuth><Tools /></RequireAuth>} />
             <Route exact path="/login" element={<RequireAuth><SignIn /></RequireAuth>} />
             <Route exact path="/admin" element={<RequireAuth><Admin /></RequireAuth>} />
+            <Route exact path="/admin/request" element={<RequireAuth><RequestList /></RequireAuth>} />
           </Routes>
         </Router>
       </Box>

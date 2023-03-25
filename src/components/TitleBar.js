@@ -64,8 +64,8 @@ const TitleBar = () => {
             </Button>
           ))}
           <Button key={0} sx={{ color: '#fff' }} onClick={() => { handleLogout() }}>
-              Logout
-            </Button>
+            Logout
+          </Button>
         </Box>
       </Toolbar>
     </AppBar>
