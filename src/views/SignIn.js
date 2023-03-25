@@ -14,7 +14,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { API_HOST } from '../constants'
-import { LinearProgress } from "@mui/material";
+import { Alert, LinearProgress, Snackbar } from "@mui/material";
 import Copyright from "../components/Copyright";
 import { setStorage } from "../utils";
 import { useNavigate } from "react-router-dom";
@@ -25,6 +25,24 @@ const theme = createTheme();
 export default function SignIn() {
     let navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+
+    const [toastOpen, setToastOpen] = useState(false);
+    const [toastMessage, setToastMessage] = useState();
+    const [toastSeverity, setToastSeverity] = useState();
+
+    const updateToast = (severity, message) => {
+        setToastSeverity(severity);
+        setToastMessage(message);
+        setToastOpen(true);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === "clickaway") {
+            return;
+        }
+        setToastOpen(false);
+    };
+
     const handleSubmit = async (event) => {
         setLoading(true);
         event.preventDefault();
@@ -47,12 +65,27 @@ export default function SignIn() {
             navigate("/");
         } catch (e) {
             setStorage("DD_isLoggedIn", false);
+            updateToast("warning", "Invalid credentials");
         }
         setLoading(false);
     };
 
     return (
         <ThemeProvider theme={theme}>
+            <Snackbar
+                open={toastOpen}
+                autoHideDuration={4000}
+                onClose={handleClose}
+                anchorOrigin={{ vertical: "top", horizontal: "right" }}
+            >
+                <Alert
+                    onClose={handleClose}
+                    severity={toastSeverity}
+                    lg={{ width: "100%" }}
+                >
+                    {toastMessage}
+                </Alert>
+            </Snackbar>
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Box
