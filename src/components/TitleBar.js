@@ -3,14 +3,15 @@ import Grid from "@mui/material/Grid";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AppBar, Button, IconButton, Toolbar, Typography, Box } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
+import { setStorage } from "../utils";
 
 const TitleBar = () => {
   let navigate = useNavigate();
   const location = useLocation()
 
   const navItems = location.pathname.includes('admin') ? [
-    { label: 'Change Reuqest', value: '/request' },
-    { label: 'Inventory', value: '/invetory' }
+    { label: 'Change Reuqest', value: '/admin/request' },
+    { label: 'Inventory', value: '/admin/invetory' }
   ] : [
     { label: 'Insights', value: '/' },
     { label: 'Devices', value: '/devices' },
@@ -24,6 +25,12 @@ const TitleBar = () => {
   const handleNavigate = (link) => {
     navigate(link);
   };
+
+  const handleLogout = () => {
+    setStorage("DD_isLoggedIn", undefined);
+    navigate("/login");
+  };
+
   return (
     <AppBar component="nav">
       <Toolbar>
@@ -52,10 +59,13 @@ const TitleBar = () => {
         </Typography>
         <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
           {navItems.map((item, index) => (
-            <Button key={index} sx={{ color: '#fff' }} onClick={() => { handleNavigate(item.value) }}>
+            <Button key={++index} sx={{ color: '#fff' }} onClick={() => { handleNavigate(item.value) }}>
               {item.label}
             </Button>
           ))}
+          <Button key={0} sx={{ color: '#fff' }} onClick={() => { handleLogout() }}>
+              Logout
+            </Button>
         </Box>
       </Toolbar>
     </AppBar>
