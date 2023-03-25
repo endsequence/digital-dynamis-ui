@@ -15,8 +15,8 @@ export default function App() {
       <Router>
         <Routes>
           <Route exact path="/" element={<Discover />} />
-          <Route exact path="/manage" element={<Manage />} />
-          {/* <Route exact path="/discover" element={<Discover />} /> */}
+          <Route exact path="/devices" element={<Manage />} />
+          <Route exact path="/tools" element={<Manage />} />
         </Routes>
       </Router>
     </Box>

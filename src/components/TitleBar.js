@@ -1,41 +1,61 @@
 import React from "react";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 // import CameraIcon from '@mui/icons-material/PhotoCamera';
+import { AppBar, Button, IconButton, Toolbar, Typography, Box } from "@mui/material";
+import MenuIcon from '@mui/icons-material/Menu';
 
-const TitleBar = ({ text, link, linkText }) => {
+const TitleBar = () => {
   let navigate = useNavigate();
 
-  const handleNavigate = () => {
+  const navItems = [
+    { label: 'Insights', value: '/' },
+    { label: 'Devices', value: '/devices' },
+    { label: 'Tools', value: '/tools' }
+  ];
+
+  const handleDrawerToggle = () => {
+    setMobileOpen((prevState) => !prevState);
+  };
+
+  const handleNavigate = (link) => {
     navigate(link);
   };
   return (
-    <AppBar position="relative">
-      <Toolbar>
-        {/* <CameraIcon sx={{ mr: 2 }} /> */}
-        <Grid container direction="row" spacing={4}>
-          <Grid item xs={12} sm={6} md={10} lg={10}>
-            <Typography variant="h6" color="inherit" noWrap>
-              {text}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6} md={2} lg={2}>
-            <Button
-              size="small"
-              variant="contained"
-              color="success"
-              onClick={handleNavigate}
-            >
-              {linkText}
-            </Button>
-          </Grid>
-        </Grid>
-      </Toolbar>
-    </AppBar>
+    <AppBar component="nav">
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, display: { sm: 'none' } }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+          >
+            PUBLICIS GREEN
+          </Typography>
+          <Typography
+            variant="h7"
+            component="div"
+            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+          >
+            Welcome user name
+          </Typography>
+          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+            {navItems.map((item, index) => (
+              <Button key={index} sx={{ color: '#fff' }} onClick={() => { handleNavigate(item.value) }}>
+                {item.label}
+              </Button>
+            ))}
+          </Box>
+        </Toolbar>
+      </AppBar>
   );
 };
 

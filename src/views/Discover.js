@@ -44,11 +44,7 @@ export default function Discover() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <TitleBar
-        text={`Discover || Have fun :)`}
-        link={"/manage"}
-        linkText={"Manage Content"}
-      />
+      <TitleBar />
       <main>
         <Box
           sx={{
