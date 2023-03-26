@@ -10,6 +10,7 @@ import HighchartsReact from 'highcharts-react-official'
 import TitleBar from "../components/TitleBar";
 import { getStorage } from "../utils";
 import { useNavigate } from "react-router-dom";
+import LiveHelpIcon from '@mui/icons-material/LiveHelp';
 
 const theme = createTheme();
 
@@ -18,6 +19,7 @@ export default function SignIn() {
     const [pieChartData, setPieData] = useState([]);
     const [currentStatus, setStatus] = useState('');
     const [inventoryData, setinventoryData] = useState([]);
+    const [adminTip,setAdminTip] = useState('');
     const handleSubmit = async (event) => {
 
     };
@@ -36,7 +38,16 @@ export default function SignIn() {
             setinventoryData(data.data)
         })
     }
+
+    const getAdminTip = () => {
+        let url = `${API_HOST}/getGptResponse`;
+        axios.post(url, { ques: `Contacts of NGO's ,refurbishing vendors in dubai` }).then(data => {
+            setAdminTip(data.data)
+        })
+    }
+
     useEffect(() => {
+        getAdminTip();
         fetchPieChartData();
         fetchInventoryData();
     }, [])
@@ -142,11 +153,11 @@ export default function SignIn() {
                                     color="black"
                                     variant="h5"
                                     component="div"
-                                    sx={{ display: {sm: 'block', textAlign: 'center',pb:2 } }}
+                                    sx={{ display: { sm: 'block', textAlign: 'center', pb: 2 } }}
                                 >
-                                    Devices in {currentStatus} status 
+                                    Devices in {currentStatus} status
                                 </Typography>
-                                :'' }
+                                : ''}
                             <TableContainer component={Paper}>
 
                                 <Table sx={{ minWidth: 375 }} aria-label="simple table">
@@ -161,7 +172,7 @@ export default function SignIn() {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {inventoryData.map((row) => (
+                                        {inventoryData?.map((row) => (
 
                                             <TableRow
                                                 key={row.name}
@@ -187,6 +198,20 @@ export default function SignIn() {
                     </Grid>
                 </Container>
             </main>
+            <Grid container md={12} sx={{pl:10,pr:10}}>
+                <Grid md={1} sx={{}}>
+                <LiveHelpIcon sx={{fontSize:"70px",color:'rgb(25, 118, 210)'}}/>
+                </Grid>
+                <Grid md={11} sx={{}}>
+
+                    <Paper elevation={2} sx={{p:3}}>
+                        {adminTip.split('\n').map(line => {
+                            return <Typography>{line}</Typography>
+                        })}
+                    </Paper>
+                </Grid>
+            </Grid>
+
             <Copyright sx={{ mt: 12, mb: 4 }} />
         </ThemeProvider>
     );
