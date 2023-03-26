@@ -4,10 +4,15 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { AppBar, Button, IconButton, Toolbar, Typography, Box } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import { getStorage, setStorage } from "../utils";
+import HomeIcon from '@mui/icons-material/Home';
 
 const TitleBar = () => {
   let navigate = useNavigate();
-  const location = useLocation()
+  const location = useLocation();
+  const redirectToHome = () => {
+    const homeLink =  location.pathname.includes('admin') ? '/admin' : '/';
+    handleNavigate(homeLink)
+  }
 
   const username = getStorage("DD_username");
 
@@ -17,7 +22,8 @@ const TitleBar = () => {
   ] : [
     { label: 'Insights', value: '/' },
     { label: 'Devices', value: '/devices' },
-    { label: 'Tools', value: '/tools' }
+    { label: 'Tools', value: '/tools' },
+    { label: 'Quiz', value: '/quiz' }
   ];
 
   const handleDrawerToggle = () => {
@@ -40,10 +46,10 @@ const TitleBar = () => {
           color="inherit"
           aria-label="open drawer"
           edge="start"
-          onClick={handleDrawerToggle}
-          sx={{ mr: 2, display: { sm: 'none' } }}
+          onClick={() => redirectToHome()}
+          sx={{ mr: 2, display: { } }}
         >
-          <MenuIcon />
+          <HomeIcon />
         </IconButton>
         <Typography
           variant="h6"

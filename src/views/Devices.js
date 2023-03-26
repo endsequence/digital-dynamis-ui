@@ -39,7 +39,8 @@ export default function Discover() {
 
 
   const getDeviceList = async () => {
-    let url = `${API_HOST}/inventory`;
+    const userId = getStorage("DD_id");
+    let url = `${API_HOST}/user/device/${userId}`;
     const result = await axios.get(url, {
       headers: {
         "Content-Type": "application/json",
@@ -100,7 +101,7 @@ export default function Discover() {
                     alignItems="center"
                     textAlign="center"
                     justifyContent="center">
-                    <Paper elevation={3} sx={{ p: 2 }}>
+                    <Paper elevation={3} sx={{ p: 2, m: 3 }}>
                       <Box>
                         <Box sx={{ color: '#212B36' }}>{`${device.ownerType} Device`}</Box>
                         {/* <Box sx={{ color: "rgb(25, 118, 210)", fontSize: "24px", mb: 7 }}>{device.name}</Box> */}
@@ -116,6 +117,15 @@ export default function Discover() {
                           <img loading="lazy" src={device.imageUrl} alt={device.name} />
                         </Box>
 
+                        <Box sx={{ pb: 3 }}>
+                          <img src={device.imgUrl} width="300" alt={device.name} />
+                        </Box>
+                        <Box sx={{ fontsize: "5px" }}>
+                          <span style={{ color: "rgb(25, 118, 210)" }}>Carbon Foot Print : </span>
+                          {`${device.carbonFootprint} gCO2eq/kWh`}</Box>
+                        <Box sx={{ fontsize: "5px", pb: 2 }}>
+                          <span style={{ color: "rgb(25, 118, 210)" }}>Aquired On : </span>
+                          {`${device.acquiredDate?.split('T')[0]}`}</Box>
                         <Box>
                           <Link underline="hover" color="rgb(25, 118, 210)" sx={linkCss} href="return false;" onClick={() => handleOpen(device)}>
                             Raise Request
