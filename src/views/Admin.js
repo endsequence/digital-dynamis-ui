@@ -3,7 +3,7 @@ import axios from "../customAxios";
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { API_HOST } from '../constants'
-import { Grid, Typography } from "@mui/material";
+import { Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import Copyright from "../components/Copyright";
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
@@ -15,27 +15,33 @@ const theme = createTheme();
 
 export default function SignIn() {
     let navigate = useNavigate();
-    const [loading, setLoading] = useState(false);
+    const [pieChartData, setPieData] = useState([]);
+    const [currentStatus, setStatus] = useState('');
+    const [inventoryData, setinventoryData] = useState([]);
     const handleSubmit = async (event) => {
-        setLoading(true);
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
-        let url = `${API_HOST}/login`;
-        try {
-            const result = await axios.post(url, {
-                userName: data.get('email'), password: data.get('password')
-            });
-        } catch (e) {
 
-        }
-
-        setLoading(false);
     };
 
+    const fetchPieChartData = () => {
+        let url = `${API_HOST}/getPieChartData`;
+        axios.get(url).then(data => {
+            setPieData(data.data)
+        })
+    }
+
+    const fetchInventoryData = status => {
+        setStatus(status)
+        let url = `${API_HOST}/inventory`;
+        axios.post(url, { status }).then(data => {
+            setinventoryData(data.data)
+        })
+    }
+    useEffect(() => {
+        fetchPieChartData();
+        fetchInventoryData();
+    }, [])
+
+    console.log({ pieChartData, inventoryData })
     useEffect(() => {
         const userIsAdmin = getStorage("DD_isAdmin");
         if (userIsAdmin !== 'true') {
@@ -74,69 +80,10 @@ export default function SignIn() {
                                 highcharts={Highcharts}
                                 options={{
                                     chart: {
-                                        type: 'column'
-                                    },
-                                    title: {
-                                        text: 'Carbon foot print'
-                                    },
-                                    subtitle: {
-                                        text: 'Source: Publicis Green'
-                                    },
-                                    xAxis: {
-                                        categories: [
-                                            'Jan',
-                                            'Feb',
-                                            'Mar',
-                                            'Apr',
-                                            'May',
-                                            'Jun',
-                                            'Jul',
-                                            'Aug',
-                                            'Sep',
-                                            'Oct',
-                                            'Nov',
-                                            'Dec'
-                                        ],
-                                        crosshair: true
-                                    },
-                                    yAxis: {
-                                        min: 0,
-                                        title: {
-                                            text: 'Rainfall (mm)'
-                                        }
-                                    },
-                                    tooltip: {
-                                        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                                        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                                            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
-                                        footerFormat: '</table>',
-                                        shared: true,
-                                        useHTML: true
-                                    },
-                                    plotOptions: {
-                                        column: {
-                                            pointPadding: 0.2,
-                                            borderWidth: 0
-                                        }
-                                    },
-                                    series: [{
-                                        name: 'Tokyo',
-                                        data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4,
-                                            194.1, 95.6, 54.4]
-
-                                    }]
-                                }}
-                            />
-                        </Grid>
-                        <Grid md={6}>
-                            <HighchartsReact
-                                highcharts={Highcharts}
-                                options={{
-                                    chart: {
                                         plotBackgroundColor: null,
                                         plotBorderWidth: null,
                                         plotShadow: false,
-                                        type: 'pie'
+                                        type: 'pie',
                                     },
                                     title: {
                                         text: 'Devices Statuses',
@@ -161,46 +108,86 @@ export default function SignIn() {
                                         }
                                     },
                                     series: [{
-                                        name: 'Brands',
+                                        name: 'Share',
                                         colorByPoint: true,
-                                        data: [{
-                                            name: 'Chrome',
-                                            y: 70.67,
-                                            sliced: true,
-                                            selected: true
-                                        }, {
-                                            name: 'Edge',
-                                            y: 14.77
-                                        }, {
-                                            name: 'Firefox',
-                                            y: 4.86
-                                        }, {
-                                            name: 'Safari',
-                                            y: 2.63
-                                        }, {
-                                            name: 'Internet Explorer',
-                                            y: 1.53
-                                        }, {
-                                            name: 'Opera',
-                                            y: 1.40
-                                        }, {
-                                            name: 'Sogou Explorer',
-                                            y: 0.84
-                                        }, {
-                                            name: 'QQ',
-                                            y: 0.51
-                                        }, {
-                                            name: 'Other',
-                                            y: 2.6
-                                        }]
+                                        data: pieChartData,
+                                        point: {
+                                            events: {
+                                                click: function (event) {
+                                                    // alert(this.x + " " + this.y + this.name);
+                                                    fetchInventoryData(this.name)
+
+                                                }
+                                            }
+                                        }
+                                        // events: {
+                                        //     click: function (event) {
+                                        //         console.log(this.category)
+                                        //         alert(
+                                        //             this.name + ' clicked\n' +
+                                        //             'Alt: ' + event.altKey + '\n' +
+                                        //             'Control: ' + event.ctrlKey + '\n' +
+                                        //             'Meta: ' + event.metaKey + '\n' +
+                                        //             'Shift: ' + event.shiftKey
+                                        //         );
+                                        //     }
+                                        // }
                                     }]
                                 }}
                             />
                         </Grid>
+                        <Grid md={6} sx={{ pl: 2 }}>
+                            {currentStatus ?
+                                <Typography
+                                    color="black"
+                                    variant="h5"
+                                    component="div"
+                                    sx={{ display: {sm: 'block', textAlign: 'center',pb:2 } }}
+                                >
+                                    Devices in {currentStatus} status 
+                                </Typography>
+                                :'' }
+                            <TableContainer component={Paper}>
+
+                                <Table sx={{ minWidth: 375 }} aria-label="simple table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell >Image</TableCell>
+                                            <TableCell>Name</TableCell>
+                                            <TableCell >Owner Type</TableCell>
+                                            <TableCell >Carbon footprint</TableCell>
+                                            <TableCell >Acquired Date</TableCell>
+                                            {/* <TableCell >Protein&nbsp;(g)</TableCell> */}
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {inventoryData.map((row) => (
+
+                                            <TableRow
+                                                key={row.name}
+                                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                            >
+                                                <TableCell >
+                                                    <img src={row.imgUrl} width="60" alt={row.name} />
+                                                </TableCell>
+                                                <TableCell component="th" scope="row">
+                                                    {row.name}
+                                                </TableCell>
+                                                <TableCell >{row.ownerType}</TableCell>
+
+                                                <TableCell >{row.carbonFootprint}</TableCell>
+                                                <TableCell >{row.acquiredDate.split('T')[0]}</TableCell>
+                                                {/* <TableCell >{row.protein}</TableCell> */}
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </Grid>
                     </Grid>
                 </Container>
             </main>
-            <Copyright sx={{ mt: 8, mb: 4 }} />
+            <Copyright sx={{ mt: 12, mb: 4 }} />
         </ThemeProvider>
     );
 }
