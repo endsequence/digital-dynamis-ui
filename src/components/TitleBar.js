@@ -17,13 +17,14 @@ const TitleBar = () => {
   const username = getStorage("DD_username");
 
   const navItems = location.pathname.includes('admin') ? [
+    { label: 'Dashboard', value: '/admin' },
     { label: 'Change Reuqest', value: '/admin/request' },
-    { label: 'Inventory', value: '/admin/inventory' }
+    // { label: 'Inventory', value: '/admin/inventory' }
   ] : [
     { label: 'Insights', value: '/' },
     { label: 'Devices', value: '/devices' },
     { label: 'Tools', value: '/tools' },
-    { label: 'Quiz', value: '/quiz' }
+    // { label: 'Quiz', value: '/quiz' }
   ];
 
   const handleDrawerToggle = () => {
@@ -52,10 +53,10 @@ const TitleBar = () => {
           <HomeIcon />
         </IconButton>
         <Typography
-          onClick={() => redirectToHome()}
+          // onClick={() => redirectToHome()}
           variant="h6"
           component="div"
-          sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block', cursor: "pointer" } }}
+          sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block'} }}
         >
           PUBLICIS GREEN
         </Typography>
