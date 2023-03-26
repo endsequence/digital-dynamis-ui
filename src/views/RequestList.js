@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { API_HOST } from '../constants'
-import { Button, FormControl, FormControlLabel, FormLabel, Grid, LinearProgress, Radio, RadioGroup } from "@mui/material";
+import { Button, FormControl, FormControlLabel, FormLabel, Grid, LinearProgress, Radio, RadioGroup, Typography } from "@mui/material";
 import Copyright from "../components/Copyright";
 import TitleBar from "../components/TitleBar";
 import Collapse from '@mui/material/Collapse';
@@ -172,15 +172,26 @@ export default function ListRequests() {
                         pb: 5,
                     }}
                 >
-                    <Container maxWidth="lg" sx={{ pt: 8 }}>
-                        <Grid direction="column"
-                            alignItems="center"
-                            textAlign="center"
-                            justifyContent="center">
-                            <Box sx={{ fontSize: '35px', fontWeight: 'bold', pb: 6 }}>
-                                Request List
-                            </Box>
+                    <Container maxWidth="lg" sx={{ pt: 1 }}>
+
+                    <Grid container spacing={4} sx={{ my: 2 }}>
+                        <Grid item xs={12} sm={12} md={12} lg={12}>
+                            <Typography
+                                color="primary"
+                                variant="h5"
+                                component="div"
+                                sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block', textAlign: 'center' } }}
+                            >
+                                Requests List
+                            </Typography>
+                            <Typography
+                                component="div"
+                                sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block', textAlign: 'center' } }}
+                            >
+                                The Return Request page shows all user return requests with relevant details. It enables administrators to manage return requests efficiently, including approving or rejecting requests, handling e-waste, donating and refurbishing.
+                            </Typography>
                         </Grid>
+                    </Grid>
 
                         <Grid container spacing={4} sx={{ my: 2 }}>
                             {/* <div style={{ height: '400px',maxHeight:'700px', width: '100%' }}> */}
