@@ -25,6 +25,7 @@ export default function Tools() {
     let navigate = useNavigate();
     const [filesToUpload, setFilesToUpload] = useState([])
     const [fileName, setFilename] = useState();
+    const [fileNameDataProf, setFilenameDataProf] = useState();
     const [toastOpen, setToastOpen] = useState(false);
     const [toastMessage, setToastMessage] = useState();
     const [toastSeverity, setToastSeverity] = useState();
@@ -37,14 +38,18 @@ export default function Tools() {
         setToastOpen(false);
     };
 
-    const handleFileUpload = (e) => {
-        console.log("in handleFileUpload");
-        if (!e.target.files) {
-            return;
-        }
-        const file = e.target.files[0];
-        const { name } = file;
-        setFilename(name);
+    const handleFileUpload = (type) => {
+        console.log({ type });
+        // console.log("in handleFileUpload");
+        // if (!e.target.files) {
+        //     return;
+        // }
+        // const file = e.target.files[0];
+        // const { name } = file;
+        if (type == 'data_profiling')
+            setFilenameDataProf(type);
+        else
+            setFilename(type);
     };
 
     const updateToast = (severity, message) => {
@@ -63,9 +68,9 @@ export default function Tools() {
     useEffect(() => {
         const userIsAdmin = getStorage("DD_isAdmin");
         if (userIsAdmin === 'true') {
-          navigate('/admin')
+            navigate('/admin')
         }
-      }, [navigate])
+    }, [navigate])
 
     return (
         <ThemeProvider theme={theme}>
@@ -123,7 +128,7 @@ export default function Tools() {
                                         '& > :not(style)': {
                                             m: 1,
                                             width: "100%",
-                                            height: 400,
+                                            height: 450,
                                         },
                                     }}
                                 >
@@ -136,6 +141,12 @@ export default function Tools() {
                                                     color="primary"
                                                 >
                                                     Print Scheduler
+                                                </Typography>
+                                                <Typography
+                                                    component="div"
+                                                    sx={{ flexGrow: 10, mt: 2, display: { xs: 'none', sm: 'block' } }}
+                                                >
+                                                    it allows users to schedule print jobs at specific times, reducing energy consumption and lowering electricity costs, especially for laser printers that use more power to warm up for printing."
                                                 </Typography>
                                             </Grid>
                                         </Grid>
@@ -161,13 +172,13 @@ export default function Tools() {
                                                     sx={{ marginRight: "1rem" }}
                                                 >
                                                     Upload ZIP
-                                                    <input type="file" accept=".zip" hidden onChange={handleFileUpload} />
+                                                    <input type="file" accept=".zip" hidden onChange={() => handleFileUpload("print_sch")} />
                                                 </Button>
                                             </Grid>
 
                                         </Grid>
 
-                                        <Grid container spacing={4} sx={{ my: 2 }}>
+                                        <Grid container spacing={4} >
                                             <Grid item xs={12} sm={12} md={12} lg={12} textAlign="center">
                                                 {fileName && <Typography
                                                     // variant="h6"
@@ -179,7 +190,7 @@ export default function Tools() {
                                             </Grid>
                                         </Grid>
 
-                                        <Grid container spacing={4} sx={{ my: 2 }}>
+                                        <Grid container spacing={4} >
                                             <Grid item xs={12} sm={12} md={12} lg={12} textAlign="right">
                                                 <Button
                                                     component="label"
@@ -204,13 +215,11 @@ export default function Tools() {
                                         '& > :not(style)': {
                                             m: 1,
                                             width: "100%",
-                                            height: 400,
+                                            height: 450,
                                         },
                                     }}
                                 >
                                     <Paper elevation={3}>
-
-
                                         <Grid
                                             container
                                             direction="column"
@@ -231,10 +240,81 @@ export default function Tools() {
                                                     component="div"
                                                     sx={{ flexGrow: 10, mt: 2, display: { xs: 'none', sm: 'block' } }}
                                                 >
-                                                When paper gets recycled it preserves natural resources, saving energy, reducing greenhouse gas emissions and keeps landfill space free from other types of waste that can't be recycled.
+                                                    When paper gets recycled it preserves natural resources, saving energy, reducing greenhouse gas emissions and keeps landfill space free from other types of waste that can't be recycled.
                                                 </Typography>
                                             </Grid>
+                                            <Grid item xs={6} sm={6} md={6} lg={6} textAlign="right" sx={{ mt: "37%", alignSelf: "end" }}>
+                                                <Button
+                                                    component="label"
+                                                    variant="contained"
+                                                    sx={{ marginRight: "1rem" }}
+                                                >
+                                                    SUBMIT Request
+                                                    <input type="submit" accept=".zip" hidden onClick={handleSubmit} />
+                                                </Button>
+                                            </Grid>
+                                        </Grid>
+                                    </Paper>
+                                </Box>
+                            </Grid>
+
+                            <Grid item xs={12} sm={4} md={4} lg={4}>
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        flexWrap: 'wrap',
+                                        '& > :not(style)': {
+                                            m: 1,
+                                            width: "100%",
+                                            height: 450,
+                                        },
+                                    }}
+                                >
+                                    <Paper elevation={3}>
+                                        <Grid
+                                            container
+                                            direction="column"
+                                            justifyContent="space-between"
+                                            alignItems="center"
+                                            sx={{ mt: 1 }}
+                                            spacing={4}
+                                        >
                                             <Grid item xs={6} sm={6} md={6} lg={6} textAlign="center">
+                                                <Typography
+                                                    component="div"
+                                                    sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+                                                    color="primary"
+                                                >
+                                                    Data Profiling
+                                                </Typography>
+                                                <Typography
+                                                    component="div"
+                                                    sx={{ flexGrow: 10, mt: 2, display: { xs: 'none', sm: 'block' } }}
+                                                >
+                                                    It can be used to automatically scan and analyze large datasets to identify patterns, inconsistencies, and errors in the data. <br></br> And this reducing the growth of data pollution.
+                                                </Typography>
+                                            </Grid>
+                                            <Grid item xs={12} sm={12} md={12} lg={12} textAlign="center">
+                                                <Button
+                                                    component="label"
+                                                    variant="outlined"
+                                                    startIcon={<UploadFileIcon />}
+                                                    sx={{ marginRight: "1rem" }}
+                                                >
+                                                    Upload ZIP
+                                                    <input type="file" accept=".zip" hidden onChange={() => handleFileUpload("data_profiling")} />
+                                                </Button>
+                                            </Grid>
+                                            <Grid item xs={12} sm={12} md={12} lg={12} textAlign="center">
+                                                {fileNameDataProf && <Typography
+                                                    // variant="h6"
+                                                    component="div"
+                                                    sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+                                                >
+                                                    File uploaded
+                                                </Typography>}
+                                            </Grid>
+                                            <Grid item xs={6} sm={6} md={6} lg={6} textAlign="center" sx={{ mt: "18%", alignSelf: "end" }}>
                                                 <Button
                                                     component="label"
                                                     variant="contained"
@@ -257,7 +337,7 @@ export default function Tools() {
                                         '& > :not(style)': {
                                             m: 1,
                                             width: "100%",
-                                            height: 400,
+                                            height: 450,
                                         },
                                     }}
                                 >
