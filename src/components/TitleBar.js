@@ -10,7 +10,7 @@ const TitleBar = () => {
   let navigate = useNavigate();
   const location = useLocation();
   const redirectToHome = () => {
-    const homeLink =  location.pathname.includes('admin') ? '/admin' : '/';
+    const homeLink = location.pathname.includes('admin') ? '/admin' : '/';
     handleNavigate(homeLink)
   }
 
@@ -47,14 +47,15 @@ const TitleBar = () => {
           aria-label="open drawer"
           edge="start"
           onClick={() => redirectToHome()}
-          sx={{ mr: 2, display: { } }}
+          sx={{ mr: 2, display: {} }}
         >
           <HomeIcon />
         </IconButton>
         <Typography
+          onClick={() => redirectToHome()}
           variant="h6"
           component="div"
-          sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+          sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block', cursor: "pointer" } }}
         >
           PUBLICIS GREEN
         </Typography>
