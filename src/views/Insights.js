@@ -82,7 +82,7 @@ export default function Insights() {
 
 
             <Grid container spacing={4} sx={{ my: 2 }}>
-              <Grid item xs={12} sm={8} md={8} lg={8}>
+              <Grid item xs={12} sm={9} md={9} lg={9}>
                 <Typography
                   color="primary"
                   variant="h5"
@@ -98,15 +98,15 @@ export default function Insights() {
                   Identifying and quantifying CO2 emissions helps to identify excessive energy usage or other inefficiencies. Lowering emissions typically goes hand in hand with increasing efficiency and cost-effectiveness in a company's processes.
                 </Typography>
               </Grid>
-              <Grid item xs={12} sm={4} md={4} lg={4}>
-                <Paper elevation={10}  sx={{padding: 5}}>
+              <Grid item xs={12} sm={3} md={3} lg={3}>
+                <Paper elevation={10}  sx={{padding: 2}}>
                   <Typography
                     color="primary"
                     variant="h8"
                     component="div"
                     sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block', textAlign: 'left' } }}
                   >
-                    Your Carbon Points: 1200 {' '}<span>&#9786;</span>
+                    Your Carbon Points: <br></br>1200 {' '}<span>&#9786;</span>
                   </Typography>
                 </Paper>
               </Grid>
