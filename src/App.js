@@ -10,6 +10,7 @@ import Insights from "./views/Insights";
 import Manage from "./views/Manage";
 import Devices from "./views/Devices";
 import SignIn from "./views/SignIn";
+import Quiz from "./views/Quiz";
 import Admin from "./views/Admin";
 import RequestList from "./views/RequestList";
 import Tools from "./views/Tools";
@@ -37,6 +38,7 @@ export default function App() {
             <Route exact path="/devices" element={<RequireAuth><Devices /></RequireAuth>} />
             <Route exact path="/tools" element={<RequireAuth><Tools /></RequireAuth>} />
             <Route exact path="/login" element={<RequireAuth><SignIn /></RequireAuth>} />
+            <Route exact path="/quiz" element={<RequireAuth><Quiz /></RequireAuth>} />
             <Route exact path="/admin" element={<RequireAuth><Admin /></RequireAuth>} />
             <Route exact path="/admin/request" element={<RequireAuth><RequestList /></RequireAuth>} />
           </Routes>

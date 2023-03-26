@@ -10,6 +10,7 @@ import axios from "../customAxios";
 import { API_HOST } from '../constants'
 import { Button, Link, Modal, Paper, Typography } from "@mui/material";
 import Copyright from "../components/Copyright";
+import { getStorage } from "../utils";
 
 const linkCss = { border: 1, borderRadius: 48, pb: 1, pt: 1, pr: 2, pl: 2, fontSize: 10, mt: 2 };
 const theme = createTheme();
@@ -36,7 +37,8 @@ export default function Discover() {
 
 
   const getDeviceList = async () => {
-    let url = `${API_HOST}/inventory`;
+    const userId = getStorage("DD_id");
+    let url = `${API_HOST}/user/device/${userId}`;
     const result = await axios.get(url, {
       headers: {
         "Content-Type": "application/json",
@@ -67,9 +69,17 @@ export default function Discover() {
             <Grid alignItems="center"
               textAlign="center"
               justifyContent="center">
-              <Box sx={{ fontSize: '35px', fontWeight: 'bold', pb: 6 }}>
+              <Typography
+                color="primary"
+                variant="h5"
+                component="div"
+                sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block', textAlign: 'center' } }}
+              >
                 My Devices
-              </Box>
+              </Typography>
+              {/* <Box sx={{ fontSize: '35px', fontWeight: 'bold', pb: 6 }}>
+                My Devices
+              </Box> */}
             </Grid>
 
             <Grid container spacing={2} >
@@ -79,14 +89,20 @@ export default function Discover() {
                     alignItems="center"
                     textAlign="center"
                     justifyContent="center">
-                    <Paper elevation={3} sx={{ p: 2 }}>
+                    <Paper elevation={3} sx={{ p: 2, m: 3 }}>
                       <Box>
                         <Box sx={{ color: '#212B36' }}>{`${device.ownerType} Device`}</Box>
-                        <Box sx={{ color: "rgb(25, 118, 210)", fontSize: "24px", mb: 7 }}>{device.name}</Box>
-                        <Box sx={{ pb: 3 }}>
-                          <img loading="lazy" src={device.imageUrl} alt={device.name} />
-                        </Box>
+                        <Box sx={{ color: "rgb(25, 118, 210)", fontSize: "24px", mb: 5 }}>{device.name}</Box>
 
+                        <Box sx={{ pb: 3 }}>
+                          <img src={device.imgUrl} width="300" alt={device.name} />
+                        </Box>
+                        <Box sx={{ fontsize: "5px" }}>
+                          <span style={{ color: "rgb(25, 118, 210)" }}>Carbon Foot Print : </span>
+                          {`${device.carbonFootprint} gCO2eq/kWh`}</Box>
+                        <Box sx={{ fontsize: "5px", pb: 2 }}>
+                          <span style={{ color: "rgb(25, 118, 210)" }}>Aquired On : </span>
+                          {`${device.acquiredDate?.split('T')[0]}`}</Box>
                         <Box>
                           <Link underline="hover" color="rgb(25, 118, 210)" sx={linkCss} href="return false;" onClick={() => handleOpen(device)}>
                             Raise Request
