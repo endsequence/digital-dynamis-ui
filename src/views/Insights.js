@@ -14,7 +14,7 @@ import Copyright from "../components/Copyright";
 import axios from "axios";
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
-import { Paper, Typography } from "@mui/material";
+import { Button, FormControl, FormControlLabel, Radio, RadioGroup, Typography, Snackbar, Alert, Paper } from "@mui/material";
 import { API_HOST } from "../constants";
 import { getStorage } from "../utils";
 import { useNavigate } from "react-router-dom";
@@ -26,9 +26,70 @@ export default function Insights() {
   const userId = getStorage("DD_id");
   const userName = getStorage("DD_username");
 
+  const [loading, setLoading] = useState(false);
   const [idleHrsdata, setIdleHrsdata] = useState([]);
   const [cfValues, setCfValues] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [submitted, setSubmitted] = useState(false);
+  const [selectedOption, setOption] = useState('');
+  const [toastOpen, setToastOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState();
+  const [toastSeverity, setToastSeverity] = useState();
+  const [quizData, setQuizData] = useState({});
+
+  const updateToast = (severity, message) => {
+    setToastSeverity(severity);
+    setToastMessage(message);
+    setToastOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setToastOpen(false);
+  };
+
+  const handleChange = (event) => {
+    setOption(event.target.value);
+  };
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    console.log({ quizData })
+    let url = `${API_HOST}/verifyAnswer`;
+    const result = await axios.post(url, {
+      quesId: quizData.quesId,
+      answer: selectedOption
+    });
+    console.log({ result })
+    if (result.data?.isCorrect) {
+      updateToast('success', "Correct Answer.Congrat's you won 10 reward points ")
+    } else {
+      updateToast('warning', `Wrong Answer.Correct Answer is ${result.data?.correctAnswer}`)
+    }
+    setSubmitted(true);
+    setLoading(false);
+  };
+
+  const getQuiz = async () => {
+    setLoading(true)
+    setOption('')
+    console.log("test")
+    let url = `${API_HOST}/gptQuiz`;
+    const result = await axios.post(url, {
+      ques: 'only one quiz question for e-waste management with 4 options with correct answer'
+    });
+    const { question, options, quesId } = result.data;
+    console.log({ result })
+    setQuizData({ options, question, quesId })
+    setSubmitted(false);
+    setLoading(false)
+  };
+
+  useEffect(() => {
+    getQuiz();
+  }, [])
 
   const getIdleHours = async () => {
     let url = `${API_HOST}/idleTime/${userId}`;
@@ -78,6 +139,20 @@ export default function Insights() {
             pb: 5,
           }}
         >
+          <Snackbar
+            open={toastOpen}
+            autoHideDuration={6000}
+            onClose={handleClose}
+            anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          >
+            <Alert
+              onClose={handleClose}
+              severity={toastSeverity}
+              lg={{ width: "100%" }}
+            >
+              {toastMessage}
+            </Alert>
+          </Snackbar>
           <Container maxWidth="lg">
 
 
@@ -99,7 +174,7 @@ export default function Insights() {
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={3} md={3} lg={3}>
-                <Paper elevation={10}  sx={{padding: 2}}>
+                <Paper elevation={10} sx={{ padding: 2 }}>
                   <Typography
                     color="primary"
                     variant="h8"
@@ -177,6 +252,43 @@ export default function Insights() {
                     }]
                   }}
                 />
+              </Grid>
+              <Grid item xs={12} sm={12} md={12} lg={12}>
+                <Typography
+                  color="primary"
+                  variant="h5"
+                  // component="div"
+                  sx={{ display: { sm: 'block', textAlign: 'center', pb: 0 } }}
+                >
+                  Test your knowledge
+                </Typography>
+                <FormControl sx={{
+                  bgcolor: "background.paper",
+                  pt: 1,
+                  pb: 5,
+                  width: '80%'
+                }}>
+                  <Box sx={{ color: '#212B36', fontSize: "22px", fontWeight: "500" }}>{quizData.question}</Box>
+
+                  <RadioGroup
+                    aria-labelledby="demo-radio-buttons-group-label"
+                    defaultValue=""
+                    name="radio-buttons-group"
+                    onChange={handleChange}
+                    sx={{ mt: 2, mb: 2 }}
+                    value={selectedOption}
+                  >
+                    {
+                      quizData.options?.map((option) => {
+                        return <FormControlLabel value={option?.charAt(0)} control={<Radio />} label={option} />
+                      })
+                    }
+                  </RadioGroup>
+                  {loading ? <LinearProgress sx={{ mb: 1 }} /> : ''}
+                  <Button variant="contained" onClick={() => submitted ? getQuiz() : handleSubmit()}>
+                    {submitted ? 'Next Question' : 'Submit'}
+                  </Button>
+                </FormControl>
               </Grid>
             </Grid>
           </Container>
