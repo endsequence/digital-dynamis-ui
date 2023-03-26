@@ -3,7 +3,7 @@ import axios from "../customAxios";
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { API_HOST } from '../constants'
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import Copyright from "../components/Copyright";
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
@@ -47,8 +47,28 @@ export default function SignIn() {
         <ThemeProvider theme={theme}>
             <TitleBar />
             <main>
-                <Container maxWidth="lg" sx={{ pt: 8 }}>
+                <Container maxWidth="lg" sx={{ mt: 8 }}>
+
                     <Grid container spacing={4} sx={{ my: 2 }}>
+                        <Grid item xs={12} sm={12} md={12} lg={12}>
+                            <Typography
+                                color="primary"
+                                variant="h5"
+                                component="div"
+                                sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block', textAlign: 'center' } }}
+                            >
+                                Admin Dashboard
+                            </Typography>
+                            <Typography
+                                component="div"
+                                sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block', textAlign: 'center' } }}
+                            >
+                                Admin Device Inventory page provides real-time overview of devices in use with information such as type, model, location and current assignment, enabling effective device management.
+                            </Typography>
+                        </Grid>
+                    </Grid>
+
+                    <Grid container spacing={4} sx={{ my: 4 }}>
                         <Grid md={6}>
                             <HighchartsReact
                                 highcharts={Highcharts}
