@@ -144,7 +144,11 @@ export default function Insights() {
                       type: 'column'
                     },
                     title: {
-                      text: 'My chart'
+                      text: 'My Carboon footprint impact'
+                    },
+                    subtitle: {
+                      text: 'A chart depicting the amount of carbon foorprint as comparaed to others in the organisation',
+                      align: 'center'
                     },
                     xAxis: {
                       categories: categories

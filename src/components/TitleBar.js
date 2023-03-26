@@ -10,20 +10,21 @@ const TitleBar = () => {
   let navigate = useNavigate();
   const location = useLocation();
   const redirectToHome = () => {
-    const homeLink =  location.pathname.includes('admin') ? '/admin' : '/';
+    const homeLink = location.pathname.includes('admin') ? '/admin' : '/';
     handleNavigate(homeLink)
   }
 
   const username = getStorage("DD_username");
 
   const navItems = location.pathname.includes('admin') ? [
+    { label: 'Dashboard', value: '/admin' },
     { label: 'Change Reuqest', value: '/admin/request' },
-    { label: 'Inventory', value: '/admin/inventory' }
+    // { label: 'Inventory', value: '/admin/inventory' }
   ] : [
     { label: 'Insights', value: '/' },
     { label: 'Devices', value: '/devices' },
     { label: 'Tools', value: '/tools' },
-    { label: 'Quiz', value: '/quiz' }
+    // { label: 'Quiz', value: '/quiz' }
   ];
 
   const handleDrawerToggle = () => {
@@ -47,14 +48,15 @@ const TitleBar = () => {
           aria-label="open drawer"
           edge="start"
           onClick={() => redirectToHome()}
-          sx={{ mr: 2, display: { } }}
+          sx={{ mr: 2, display: {} }}
         >
           <HomeIcon />
         </IconButton>
         <Typography
+          // onClick={() => redirectToHome()}
           variant="h6"
           component="div"
-          sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+          sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block'} }}
         >
           PUBLICIS GREEN
         </Typography>
