@@ -62,7 +62,7 @@ export default function SignIn() {
             setStorage("DD_username", user.name)
             setStorage("DD_isAdmin", user.isAdmin)
             setStorage("DD_id", user.id)
-            navigate("/");
+            if (user.isAdmin == 'true') navigate("/admin"); else navigate("/");
         } catch (e) {
             setStorage("DD_isLoggedIn", false);
             updateToast("warning", "Invalid credentials");

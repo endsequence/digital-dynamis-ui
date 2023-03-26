@@ -10,11 +10,13 @@ import axios from "../customAxios";
 import { API_HOST } from '../constants'
 import { Button, Link, Modal, Paper, Typography } from "@mui/material";
 import Copyright from "../components/Copyright";
+import { useNavigate } from "react-router-dom";
 import { getStorage } from "../utils";
 
 const linkCss = { border: 1, borderRadius: 48, pb: 1, pt: 1, pr: 2, pl: 2, fontSize: 10, mt: 2 };
 const theme = createTheme();
 export default function Discover() {
+  let navigate = useNavigate();
 
   const [devices, setDevices] = useState([]);
   const [reason, setReason] = useState('');
@@ -51,7 +53,14 @@ export default function Discover() {
     getDeviceList();
   }, [])
 
-  console.log({ devices })
+  // console.log({ devices })
+
+  useEffect(() => {
+    const userIsAdmin = getStorage("DD_isAdmin");
+    if (userIsAdmin === 'true') {
+      navigate('/admin')
+    }
+  }, [navigate])
 
   return (
     <ThemeProvider theme={theme}>
@@ -65,24 +74,27 @@ export default function Discover() {
             pb: 5,
           }}
         >
-          <Container maxWidth="lg" sx={{ pt: 8 }}>
-            <Grid alignItems="center"
-              textAlign="center"
-              justifyContent="center">
-              <Typography
-                color="primary"
-                variant="h5"
-                component="div"
-                sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block', textAlign: 'center' } }}
-              >
-                My Devices
-              </Typography>
-              {/* <Box sx={{ fontSize: '35px', fontWeight: 'bold', pb: 6 }}>
-                My Devices
-              </Box> */}
+          <Container maxWidth="lg">
+            <Grid container spacing={4} sx={{ my: 2 }}>
+              <Grid item xs={12} sm={12} md={12} lg={12}>
+                <Typography
+                  color="primary"
+                  variant="h5"
+                  component="div"
+                  sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block', textAlign: 'center' } }}
+                >
+                  My Devices
+                </Typography>
+                <Typography
+                  component="div"
+                  sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block', textAlign: 'center' } }}
+                >
+                  Content Needed here
+                </Typography>
+              </Grid>
             </Grid>
 
-            <Grid container spacing={2} >
+            <Grid container spacing={2} sx={{ my: 2 }}>
               {devices.map((device, index) => {
                 return (
                   <Grid item xs={6} md={4} key={index}
@@ -92,7 +104,18 @@ export default function Discover() {
                     <Paper elevation={3} sx={{ p: 2, m: 3 }}>
                       <Box>
                         <Box sx={{ color: '#212B36' }}>{`${device.ownerType} Device`}</Box>
-                        <Box sx={{ color: "rgb(25, 118, 210)", fontSize: "24px", mb: 5 }}>{device.name}</Box>
+                        {/* <Box sx={{ color: "rgb(25, 118, 210)", fontSize: "24px", mb: 7 }}>{device.name}</Box> */}
+                        <Typography
+                        variant="h7"
+                        color="primary"
+                          component="div"
+                          sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block', textAlign: 'center' } }}
+                        >
+                          {device.name}
+                        </Typography>
+                        <Box sx={{ pb: 3 }}>
+                          <img loading="lazy" src={device.imageUrl} alt={device.name} />
+                        </Box>
 
                         <Box sx={{ pb: 3 }}>
                           <img src={device.imgUrl} width="300" alt={device.name} />
