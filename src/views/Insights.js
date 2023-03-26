@@ -14,7 +14,7 @@ import Copyright from "../components/Copyright";
 import axios from "axios";
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
-import { Button, FormControl, FormControlLabel, Radio, RadioGroup, Typography ,Snackbar,Alert} from "@mui/material";
+import { Button, FormControl, FormControlLabel, Radio, RadioGroup, Typography, Snackbar, Alert, Paper } from "@mui/material";
 import { API_HOST } from "../constants";
 import { getStorage } from "../utils";
 import { useNavigate } from "react-router-dom";
@@ -174,7 +174,7 @@ export default function Insights() {
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={4} md={4} lg={4}>
-                <Paper elevation={10}  sx={{padding: 5}}>
+                <Paper elevation={10} sx={{ padding: 5 }}>
                   <Typography
                     color="primary"
                     variant="h8"
@@ -254,11 +254,19 @@ export default function Insights() {
                 />
               </Grid>
               <Grid item xs={12} sm={12} md={12} lg={12}>
+                <Typography
+                  color="primary"
+                  variant="h5"
+                  // component="div"
+                  sx={{ display: { sm: 'block', textAlign: 'center', pb: 0 } }}
+                >
+                Test your knowledge
+                </Typography>
                 <FormControl sx={{
                   bgcolor: "background.paper",
-                  pt: 15,
+                  pt: 1,
                   pb: 5,
-                  width:'80%'
+                  width: '80%'
                 }}>
                   <Box sx={{ color: '#212B36', fontSize: "22px", fontWeight: "500" }}>{quizData.question}</Box>
 
