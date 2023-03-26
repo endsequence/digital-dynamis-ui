@@ -12,11 +12,14 @@ import { Button, Link, Modal, Paper, Typography } from "@mui/material";
 import Copyright from "../components/Copyright";
 import { useNavigate } from "react-router-dom";
 import { getStorage } from "../utils";
+import AddIcon from '@mui/icons-material/Add';
 
 const linkCss = { border: 1, borderRadius: 48, pb: 1, pt: 1, pr: 2, pl: 2, fontSize: 10, mt: 2 };
 const theme = createTheme();
 export default function Discover() {
   let navigate = useNavigate();
+  const userId = getStorage("DD_id");
+  const userName = getStorage("DD_username");
 
   const [devices, setDevices] = useState([]);
   const [reason, setReason] = useState('');
@@ -33,13 +36,17 @@ export default function Discover() {
     setModalData({})
   }
 
-  const createRequest = () => {
-    console.log({ reason })
+  const createRequest = async (deviceData) => {
+    console.log({ deviceData, reason })
+    let url = `${API_HOST}/requests`;
+    const result = await axios.post(url, {
+      userId, reason, deviceId: deviceData._id, type: "Company"
+    });
+    handleClose();
   }
 
 
   const getDeviceList = async () => {
-    const userId = getStorage("DD_id");
     let url = `${API_HOST}/user/device/${userId}`;
     const result = await axios.get(url, {
       headers: {
@@ -95,6 +102,31 @@ export default function Discover() {
             </Grid>
 
             <Grid container spacing={2} sx={{ my: 2 }}>
+              <Grid item xs={6} md={4} key="addNew"
+                alignItems="center"
+                textAlign="center"
+                justifyContent="center">
+                <Paper elevation={3} sx={{ p: 2, m: 3, minHeight: "423px", opacity: .45 }}>
+                  <Typography
+                    variant="h7"
+                    color="primary"
+                    component="div"
+                    sx={{ flexGrow: 1, pt: 4, fontSize: "40px", display: { xs: 'none', sm: 'block', textAlign: 'center' } }}
+                  >
+                    Add Device
+                  </Typography>
+                  <AddIcon sx={{ mt: 5, color: "#9a9a9a", fontSize: "140px" }} />
+                  <Typography
+                    variant="h7"
+                    color="primary"
+                    component="div"
+                    sx={{ flexGrow: 1, pt: 4, fontSize: "20px", display: { xs: 'none', sm: 'block', textAlign: 'center' } }}
+                  >
+                    Coming soon...
+                  </Typography>
+
+                </Paper>
+              </Grid>
               {devices.map((device, index) => {
                 return (
                   <Grid item xs={6} md={4} key={index}
@@ -104,20 +136,16 @@ export default function Discover() {
                     <Paper elevation={3} sx={{ p: 2, m: 3 }}>
                       <Box>
                         <Box sx={{ color: '#212B36' }}>{`${device.ownerType} Device`}</Box>
-                        {/* <Box sx={{ color: "rgb(25, 118, 210)", fontSize: "24px", mb: 7 }}>{device.name}</Box> */}
                         <Typography
-                        variant="h7"
-                        color="primary"
+                          variant="h7"
+                          color="primary"
                           component="div"
                           sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block', textAlign: 'center' } }}
                         >
                           {device.name}
                         </Typography>
-                        <Box sx={{ pb: 3 }}>
-                          <img loading="lazy" src={device.imageUrl} alt={device.name} />
-                        </Box>
 
-                        <Box sx={{ pb: 3 }}>
+                        <Box sx={{ pb: 3, pt: 3 }}>
                           <img src={device.imgUrl} width="300" alt={device.name} />
                         </Box>
                         <Box sx={{ fontsize: "5px" }}>
@@ -168,7 +196,7 @@ export default function Discover() {
                 </Grid>
                 <Grid item xs={12} sm={12}>
                   <Box justifyContent="right">
-                    <Button variant="contained" sx={{ color: "#ffffff", float: "right", mt: 3 }} onClick={createRequest}>
+                    <Button variant="contained" sx={{ color: "#ffffff", float: "right", mt: 3 }} onClick={() => createRequest(modalData)}>
                       Save
                     </Button>
                   </Box>
